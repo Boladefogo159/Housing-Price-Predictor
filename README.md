@@ -1,10 +1,10 @@
-# 🏠 House Prices - Advanced Regression Techniques (Kaggle)
+# House Prices - Advanced Regression Techniques (Kaggle)
 
 Este projeto tem como objetivo prever os preços de venda de imóveis residenciais com base em um conjunto de dados de Ames, Iowa — uma competição clássica do Kaggle focada em regressão e pré-processamento de dados.
-
+Além disso, aprender mais sobre regressão, pipeline e principalmente EDA em cima de um assunto que tenho pouca familiaridade.
 ---
 
-## 📌 Objetivo
+## Objetivo
 
 Desenvolver um pipeline robusto e interpretável para prever o valor de venda (`SalePrice`) de imóveis utilizando:
 
@@ -16,11 +16,13 @@ Desenvolver um pipeline robusto e interpretável para prever o valor de venda (`
 
 ---
 
-## 🧠 Abordagem
+## Abordagem
 
 ### 1. Pré-processamento
-- Conversão de `SalePrice` para escala logarítmica com `np.log1p()` para tratar assimetria.
-- Remoção e imputação de valores ausentes com `SimpleImputer`.
+- Conversão de `SalePrice` para escala logarítmica com `np.log1p()` 
+> Obs: Para tratar assimetria, uma dica que está no tutorial do projeto.
+- Remoção e imputação de valores ausentes com `SimpleImputer`. 
+> Obs: Como Guardrail para encoders diferentes que apareceram no test.csv
 
 ### 2. Engenharia de Features (`FeatureEngineer`)
 Criação de variáveis para capturar padrões de valor em casas mais caras, como:
@@ -30,17 +32,17 @@ Criação de variáveis para capturar padrões de valor em casas mais caras, com
 - `LuxoExterno`: Presença de itens como piscina, deck, alpendre grande.
 - `OverallQualCond`: Produto da qualidade geral com a condição.
 - `YearsSinceRemodel`: Tempo desde a última reforma.
-
-### 3. Pipelines com Scikit-Learn
+ > Obs: Foi a etapa que levou mais tempo, testei outras diversas variáveis mas que não apresentaram correlação direta suficiente por meio de testes de seleção automática de features
+### 3. Pipelines com Scikit-Learn 
 Uso de `ColumnTransformer` com:
 
 - `StandardScaler` para variáveis numéricas
 - `OrdinalEncoder` para ordinais
 - `OneHotEncoder` para variáveis nominais
-
+> Obs: Biblioteca maravilhosa.
 ---
 
-## 🔍 Modelos testados
+## Modelos testados
 
 | Modelo               | RMSE log (validação) | Público Kaggle | Comentário |
 |----------------------|----------------------|----------------|------------|
@@ -52,49 +54,41 @@ Uso de `ColumnTransformer` com:
 
 ---
 
-## 📈 Resultados (Kaggle Submission)
+## Resultados (Kaggle Submission)
 
-- ✅ Erro absoluto médio: **~R$ 8.115,09**
-- ✅ Erro percentual médio: **~4.57%**
-- ✅ Score público no Kaggle: **0.14766**
+- Erro absoluto médio: **~R$ 8.115,09**
+- Erro percentual médio: **~4.57%**
+- Score público no Kaggle: **0.14766**
 
-Isso representa um modelo competitivo, com desempenho dentro do **top 15-25% da competição**, mesmo sem uso de ensemble ou boosting.
+Segundo o GPT esse modelo representa: **top 15-25% da competição**, mesmo sem uso de ensemble ou boosting.
 
 ---
 
-## ⚖️ Estratégias de Robustez
+## Estratégias testadas
 
-- `sample_weight`: Testei dar mais peso a casas com valor acima de R$ 300 mil para tratar heterocedasticidade.
-- `handle_unknown='ignore'`: Tratei diversas falhas do encoder ao lidar com categorias novas no `test.csv`.
-> Obs: Ainda assim na submissão final há algum problema com encoder na column 0
+- `sample_weight`: Testei dar mais peso a casas com valor acima de R$ 300 mil para tratar heterocedasticidade mas aumentei o erro das casas com valores menores e acabei andando de lado.
+
 ---
 
-## 📦 Arquivos do Projeto
+## Arquivos do Projeto
 
 - `main.ipynb` – Notebook com todo o pipeline de modelagem.
 - `submission.csv` – Submissão gerada para o Kaggle.
-- `FeatureEngineer()` – Classe customizada para engenharia de variáveis.
 - `README.md` – Documentação e storytelling do projeto.
 - `stepbystep.ipynb` - Demonstra o início do EDA.
 ---
 
-## 🚀 Melhorias possíveis
+## Sugestões de melhoria futura
 
 - Experimentar `HistGradientBoostingRegressor`, `XGBoost` ou `LightGBM`
-- Implementar Stacking com Ridge, Random Forest e GBM
-- Analisar erros residuais por região (`Neighborhood`) e outliers
-- Avaliar uso de `Quantile Regression` para prever faixas de preços
 
-## 🥶 Principais desafios
+
+## Principais desafios
 - EDA e seleção de features, dataset robusto e amplo.
 - Heterocedasticidade.
 - Montar um modelo utilizando pipeline 📋
 
 ---
-
-## 🧑‍💻 Autor
-
-Projeto conduzido por Jorge Silva Pereira, analista de dados e estudante de cientista de dados, engenharia de atributos e aplicação prática de soluções de machine learning.
 
 📎 [LinkedIn](https://www.linkedin.com/in/jorgepereira-/)
 
